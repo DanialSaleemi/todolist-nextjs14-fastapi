@@ -2,9 +2,9 @@ from fastapi import FastAPI, Body, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from api.database import engine
-from api.schema import Todolist
-from api.module import createTodoItem, TodoItem, deleteTodoItem
+from api._database import engine
+from api._schema import Todolist
+from api._module import createTodoItem, TodoItem, deleteTodoItem
 from typing import Union, List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import NoResultFound
