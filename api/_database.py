@@ -2,15 +2,17 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.url import URL as Url
-from api._schema import Base, metadata
+from api._schema import Base
+from dotenv import load_dotenv
 
 
-# conn_str : str | Url | None = os.environ.get("DATABASE_URL")
-conn_str = "postgresql://DanialSaleemi:cwZvDMUL6X5x@ep-raspy-morning-289107.us-east-2.aws.neon.tech/neondb?sslmode=require"
-
+# load database connection string from .env
+_ : bool = load_dotenv()
+conn_str : str | None = os.getenv("DATABASE_URL")
 if conn_str is not None:
-    engine : Engine = create_engine(conn_str, echo=True)
-    Base.metadata.create_all(engine)
-    
+    engine : Engine = create_engine(conn_str)
 else:
-    print("No connection string found") 
+    raise Exception("DATABASE_URL not found")
+
+
+Base.metadata.create_all(engine)
